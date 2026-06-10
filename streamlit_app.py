@@ -8,19 +8,14 @@ st.set_page_config(page_title="KDP Keyword Packer", page_icon="📚", layout="ce
 st.title("📚 KDP 7-Backend Keyword Packer")
 st.markdown("Automatyczny generator i paker słów kluczowych dla Amazon KDP. Zero duplikatów, maksimum optymalizacji.")
 
-# Inicjalizacja stanu sesji (żeby aplikacja pamiętała klucz i wyniki po przeładowaniu)
-if "api_key" not in st.session_state:
-    st.session_state.api_key = ""
+# Pobieranie klucza API bezpiecznie z "Sekretów" serwera
+try:
+    API_KEY = st.secrets["OPENAI_API_KEY"]
+except KeyError:
+    st.error("⚠️ Błąd konfiguracji: Brak klucza API OpenAI na serwerze. Skontaktuj się z administratorem.")
+    st.stop()
 
-# Sidebar na ustawienia (po lewej stronie)
-with st.sidebar:
-    st.header("⚙️ Ustawienia")
-    api_key_input = st.text_input("Klucz API OpenAI:", type="password", value=st.session_state.api_key)
-    if api_key_input:
-        st.session_state.api_key = api_key_input
-    st.info("Klucz API jest potrzebny do wygenerowania słów przez AI. Nie jest on nigdzie zapisywany na stałe.")
-
-# Główny interfejs
+# Główny interfejs (brak paska bocznego z kluczem API!)
 title_input = st.text_input("Wpisz Tytuł i Podtytuł swojej książki:", placeholder="np. Ink tracing Seasons Coloring book")
 
 def clean_words(text):
@@ -69,12 +64,10 @@ def pack_keywords(title, raw_keywords_text):
 if st.button("Generuj i Pakuj (AI)", type="primary"):
     if not title_input:
         st.warning("⚠️ Proszę wpisać tytuł książki.")
-    elif not st.session_state.api_key:
-        st.warning("⚠️ Proszę podać klucz API OpenAI w panelu po lewej stronie.")
     else:
         with st.spinner('AI generuje i pakuje słowa kluczowe...'):
             try:
-                client = OpenAI(api_key=st.session_state.api_key)
+                client = OpenAI(api_key=API_KEY)
                 
                 prompt = f"""Jesteś ekspertem Amazon KDP SEO. 
 Dla książki o tytule: "{title_input}"
