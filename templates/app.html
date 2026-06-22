@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Backend Keywords | Aplikacja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { cream: { 50: '#fcfcf9', 100: '#f7f5ee', 200: '#e6dfce', DEFAULT: '#f7f5ee' }, navy: { 800: '#23395d', 900: '#152238', DEFAULT: '#152238' }, kdp_red: { 600: '#cc2936', 700: '#a8202b', DEFAULT: '#cc2936' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Merriweather', 'serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .flag-btn {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .flag-btn:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .flag-btn.active {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+            ring: 2px solid theme('colors.kdp_red.600');
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-cream-100 font-sans text-navy-900 min-h-screen">
+    <nav class="bg-white border-b border-cream-200 px-6 py-4 flex justify-between items-center flex-wrap gap-4">
+        <div class="font-serif font-bold text-xl tracking-tight">
+            7-Backend<span class="text-kdp_red-600">.</span>Keywords
+        </div>
+        <div class="flex items-center gap-4 sm:gap-6 flex-wrap">
+            <div class="bg-cream-100 px-4 py-1.5 rounded-full text-sm font-medium border border-cream-200">
+                Tokeny: <span id="credit-count" class="font-bold text-kdp_red-600">{{ credits }}</span>
+            </div>
+            <a href="https://7backend.lemonsqueezy.com/checkout/buy/c849be9a-661b-4b1c-844f-10e88367d7d3" target="_blank" class="text-xs sm:text-sm font-bold text-kdp_red-600 border border-kdp_red-600 px-3 py-1.5 rounded hover:bg-kdp_red-600 hover:text-white transition-colors">
+                Kup Tokeny
+            </a>
+            <a href="/logout" class="text-sm text-navy-800/60 hover:text-navy-900 font-medium hidden sm:block">Wyloguj ({{ email }})</a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto mt-6 sm:mt-10 px-4 sm:px-6 mb-20">
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
+            <h2 class="font-serif text-xl sm:text-2xl font-bold mb-4">Wpisz tytuł i podtytuł lub wybraną frazę</h2>
+            
+            <!-- Flagi -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-navy-800/70 mb-2">Wybierz język docelowy:</label>
+                <div class="flex gap-4 text-2xl" id="flag-container">
+                    <div class="flag-btn active" data-lang="en-US" title="USA">🇺🇸</div>
+                    <div class="flag-btn" data-lang="en-GB" title="UK">🇬🇧</div>
+                    <div class="flag-btn" data-lang="de" title="Niemcy">🇩🇪</div>
+                    <div class="flag-btn" data-lang="fr" title="Francja">🇫🇷</div>
+                    <div class="flag-btn" data-lang="it" title="Włochy">🇮🇹</div>
+                    <div class="flag-btn" data-lang="es" title="Hiszpania">🇪🇸</div>
+                    <div class="flag-btn" data-lang="pl" title="Polska">🇵🇱</div>
+                </div>
+            </div>
+
+            <!-- Tytuł -->
+            <div class="mb-4">
+                <input type="text" id="title-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm" placeholder="Tytuł książki (np. Coloring Book for Adults)">
+            </div>
+            
+            <!-- Podtytuł -->
+            <div class="mb-6">
+                <input type="text" id="subtitle-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm" placeholder="Podtytuł (Opcjonalnie, np. 50 Beautiful Mandalas)">
+            </div>
+            
+            <button onclick="processKeywords()" id="process-btn" class="w-full sm:w-auto bg-kdp_red-600 text-white px-8 py-3 rounded-md font-semibold hover:bg-kdp_red-700 transition-colors shadow-md disabled:opacity-50">
+                WYGENERUJ (-1 Token)
+            </button>
+            
+            <div id="error-msg" class="hidden mt-4 text-red-600 text-sm font-medium"></div>
+        </div>
+
+        <div id="results-container" class="hidden mt-8 space-y-6">
+            
+            <!-- 7 okienek -->
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
+                <h3 class="font-serif text-xl font-bold mb-4">Twoje 7 okienek KDP:</h3>
+                <div id="boxes-list" class="space-y-3 font-mono text-sm bg-cream-50 p-6 rounded border border-cream-200">
+                    <!-- Wyniki wpadną tutaj -->
+                </div>
+            </div>
+
+            <!-- Przycisk pobierz -->
+            <div class="text-center">
+                <button onclick="downloadTxt()" class="bg-navy-900 text-white px-8 py-3 rounded-md font-semibold hover:bg-navy-800 transition-colors shadow-md">
+                    Pobierz plik .txt
+                </button>
+            </div>
+
+            <!-- Surówka -->
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200 opacity-75 hover:opacity-100 transition-opacity">
+                <h3 class="font-serif text-lg font-bold mb-2 text-navy-800/80">Wygenerowane Słowa (Surówka z AI):</h3>
+                <textarea id="raw-text" rows="4" readonly class="w-full p-4 border border-cream-200 rounded-md bg-cream-50 text-xs font-mono text-navy-800/70"></textarea>
+            </div>
+            
+        </div>
+    </main>
+
+    <script>
+        let currentLanguage = 'en-US';
+        let currentBoxes = [];
+        
+        // Obsługa kliknięcia we flagi
+        document.querySelectorAll('.flag-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.flag-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentLanguage = e.target.getAttribute('data-lang');
+            });
+        });
+        
+        async function processKeywords() {
+            const btn = document.getElementById('process-btn');
+            const errorMsg = document.getElementById('error-msg');
+            const title = document.getElementById('title-input').value;
+            const subtitle = document.getElementById('subtitle-input').value;
+            
+            if(!title) {
+                errorMsg.innerText = "Podaj przynajmniej tytuł lub główną frazę!";
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerText = "Trwa Generowanie AI...";
+            errorMsg.classList.add('hidden');
+            
+            try {
+                const response = await fetch('/api/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: title, subtitle: subtitle, language: currentLanguage })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    errorMsg.innerText = data.error;
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+                
+                // Update credits
+                document.getElementById('credit-count').innerText = data.remaining_credits;
+                
+                // Show raw
+                document.getElementById('raw-text').value = data.raw_text;
+                
+                // Show results
+                currentBoxes = data.boxes;
+                const list = document.getElementById('boxes-list');
+                list.innerHTML = '';
+                
+                data.boxes.forEach((box, index) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `<span class="text-kdp_red-600 font-bold mr-2">Box ${index + 1}:</span> ${box} <span class="text-gray-400 text-xs ml-2 font-bold tracking-wider">${box.length}/50</span>`;
+                    list.appendChild(div);
+                });
+                
+                document.getElementById('results-container').classList.remove('hidden');
+                
+            } catch (err) {
+                errorMsg.innerText = "Wystąpił błąd podczas łączenia z serwerem.";
+                errorMsg.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "WYGENERUJ (-1 Token)";
+            }
+        }
+        
+        function downloadTxt() {
+            if (currentBoxes.length === 0) return;
+            const text = currentBoxes.join('\n');
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '7backend-keywords.txt';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
