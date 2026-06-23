@@ -18,6 +18,7 @@
     </script>
 </head>
 <body class="bg-cream-100 font-sans text-navy-900 min-h-screen">
+    <!-- Pasek Nawigacji -->
     <nav class="bg-white border-b border-cream-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div class="font-serif font-bold text-xl tracking-tight text-center sm:text-left w-full sm:w-auto">
             7-Backend<span class="text-kdp_red-600">.</span>Keywords
@@ -29,6 +30,7 @@
             <a href="https://7backend.lemonsqueezy.com/checkout/buy/c849be9a-661b-4b1c-844f-10e88367d7d3" target="_blank" class="text-xs sm:text-sm font-bold text-kdp_red-600 border border-kdp_red-600 px-3 py-1.5 rounded hover:bg-kdp_red-600 hover:text-white transition-colors">
                 Kup Tokeny
             </a>
+            <!-- Na tel ikonka drzwi, na PC email -->
             <a href="/logout" class="text-sm text-navy-800/60 hover:text-navy-900 font-medium">
                 <span class="hidden sm:inline">Wyloguj ({{ email }})</span>
                 <span class="sm:hidden font-bold underline">Wyloguj</span>
@@ -36,37 +38,48 @@
         </div>
     </nav>
 
+    <!-- Główna zawartość -->
     <main class="max-w-4xl mx-auto mt-6 sm:mt-10 px-4 sm:px-6 mb-20">
         <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
             <h2 class="font-serif text-xl sm:text-2xl font-bold mb-4">Wpisz tytuł i podtytuł, wybierz język.</h2>
             
+            <!-- Flagi Językowe BARDZO PROSTE I ZAWSZE KOLOROWE -->
             <div class="mb-6 bg-cream-50 p-4 rounded-lg border border-cream-200">
                 <label class="block text-sm font-medium text-navy-800/70 mb-3 uppercase tracking-wider">Wybierz język docelowy:</label>
                 <div class="flex flex-wrap gap-4" id="flag-container">
-                    <button type="button" class="flag-btn" data-lang="en-US" title="Angielski (USA)">
-                        <img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-8 h-auto rounded-sm transition-all duration-200 transform scale-110 shadow-md">
-                    </button>
-                    <button type="button" class="flag-btn" data-lang="en-GB" title="Angielski (UK)">
-                        <img src="https://flagcdn.com/w40/gb.png" alt="UK" class="w-8 h-auto rounded-sm transition-all duration-200 grayscale opacity-40 hover:grayscale-0 hover:opacity-100">
-                    </button>
-                    <button type="button" class="flag-btn" data-lang="de" title="Niemiecki">
-                        <img src="https://flagcdn.com/w40/de.png" alt="DE" class="w-8 h-auto rounded-sm transition-all duration-200 grayscale opacity-40 hover:grayscale-0 hover:opacity-100">
-                    </button>
-                    <button type="button" class="flag-btn" data-lang="fr" title="Francuski">
-                        <img src="https://flagcdn.com/w40/fr.png" alt="FR" class="w-8 h-auto rounded-sm transition-all duration-200 grayscale opacity-40 hover:grayscale-0 hover:opacity-100">
-                    </button>
-                    <button type="button" class="flag-btn" data-lang="it" title="Włoski">
-                        <img src="https://flagcdn.com/w40/it.png" alt="IT" class="w-8 h-auto rounded-sm transition-all duration-200 grayscale opacity-40 hover:grayscale-0 hover:opacity-100">
-                    </button>
-                    <button type="button" class="flag-btn" data-lang="es" title="Hiszpański">
-                        <img src="https://flagcdn.com/w40/es.png" alt="ES" class="w-8 h-auto rounded-sm transition-all duration-200 grayscale opacity-40 hover:grayscale-0 hover:opacity-100">
-                    </button>
-                    <button type="button" class="flag-btn" data-lang="pl" title="Polski">
-                        <img src="https://flagcdn.com/w40/pl.png" alt="PL" class="w-8 h-auto rounded-sm transition-all duration-200 grayscale opacity-40 hover:grayscale-0 hover:opacity-100">
-                    </button>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-kdp_red-600 rounded shadow-md transform scale-110" data-lang="en-US">
+                        <img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-10 h-auto block" title="Angielski (USA)">
+                    </div>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-transparent hover:border-cream-200 rounded" data-lang="en-GB">
+                        <img src="https://flagcdn.com/w40/gb.png" alt="UK" class="w-10 h-auto block" title="Angielski (UK)">
+                    </div>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-transparent hover:border-cream-200 rounded" data-lang="de">
+                        <img src="https://flagcdn.com/w40/de.png" alt="DE" class="w-10 h-auto block" title="Niemiecki">
+                    </div>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-transparent hover:border-cream-200 rounded" data-lang="fr">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="FR" class="w-10 h-auto block" title="Francuski">
+                    </div>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-transparent hover:border-cream-200 rounded" data-lang="it">
+                        <img src="https://flagcdn.com/w40/it.png" alt="IT" class="w-10 h-auto block" title="Włoski">
+                    </div>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-transparent hover:border-cream-200 rounded" data-lang="es">
+                        <img src="https://flagcdn.com/w40/es.png" alt="ES" class="w-10 h-auto block" title="Hiszpański">
+                    </div>
+                    
+                    <div class="flag-wrapper cursor-pointer border-4 border-transparent hover:border-cream-200 rounded" data-lang="pl">
+                        <img src="https://flagcdn.com/w40/pl.png" alt="PL" class="w-10 h-auto block" title="Polski">
+                    </div>
+
                 </div>
             </div>
 
+            <!-- Pola -->
             <div class="grid sm:grid-cols-2 gap-4 mb-6">
                 <div>
                     <label class="block text-xs font-bold text-navy-800/70 mb-2 uppercase tracking-wider" id="title-label">Tytuł Książki</label>
@@ -120,26 +133,23 @@
         document.getElementById('title-input').addEventListener('input', resetUI);
         document.getElementById('subtitle-input').addEventListener('input', resetUI);
         
-        // Logika obrazków flag z twardym przypisywaniem klas Tailwind
-        document.querySelectorAll('.flag-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        // NOWY, PANCERNY KOD ZAZNACZANIA FLAGI (BEZ SZAROŚCI, SAMA RAMKA)
+        document.querySelectorAll('.flag-wrapper').forEach(wrapper => {
+            wrapper.addEventListener('click', function() {
                 resetUI();
-                const targetBtn = e.target.closest('.flag-btn');
-                if (!targetBtn) return;
                 
-                // 1. Zrób wszystkie flagi blade (dodaj grayscale, opacity-40) i usuń powiększenie
-                document.querySelectorAll('.flag-btn img').forEach(img => {
-                    img.classList.add('grayscale', 'opacity-40');
-                    img.classList.remove('scale-110', 'shadow-md');
+                // Usuń czerwoną ramkę i powiększenie ze wszystkich flag
+                document.querySelectorAll('.flag-wrapper').forEach(w => {
+                    w.classList.remove('border-kdp_red-600', 'transform', 'scale-110', 'shadow-md');
+                    w.classList.add('border-transparent');
                 });
                 
-                // 2. Zrób klikniętą flagę kolorową, dużą i wyraźną
-                const img = targetBtn.querySelector('img');
-                img.classList.remove('grayscale', 'opacity-40');
-                img.classList.add('scale-110', 'shadow-md');
+                // Dodaj czerwoną ramkę i powiększenie do klikniętej flagi
+                this.classList.remove('border-transparent');
+                this.classList.add('border-kdp_red-600', 'transform', 'scale-110', 'shadow-md');
                 
-                // 3. Ustaw język
-                currentLanguage = targetBtn.getAttribute('data-lang');
+                // Zapisz język
+                currentLanguage = this.getAttribute('data-lang');
             });
         });
         
