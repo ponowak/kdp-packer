@@ -22,6 +22,7 @@
             opacity: 0.6;
             transition: all 0.2s;
             cursor: pointer;
+            user-select: none;
         }
         .flag-btn:hover {
             filter: grayscale(0%);
@@ -32,12 +33,13 @@
             filter: grayscale(0%);
             opacity: 1;
             transform: scale(1.1);
-            ring: 2px solid theme('colors.kdp_red.600');
-            border-radius: 4px;
+            border-bottom: 3px solid theme('colors.kdp_red.600');
+            padding-bottom: 2px;
         }
     </style>
 </head>
 <body class="bg-cream-100 font-sans text-navy-900 min-h-screen">
+    <!-- Pasek Nawigacji -->
     <nav class="bg-white border-b border-cream-200 px-6 py-4 flex justify-between items-center flex-wrap gap-4">
         <div class="font-serif font-bold text-xl tracking-tight">
             7-Backend<span class="text-kdp_red-600">.</span>Keywords
@@ -53,62 +55,65 @@
         </div>
     </nav>
 
+    <!-- Główna zawartość -->
     <main class="max-w-4xl mx-auto mt-6 sm:mt-10 px-4 sm:px-6 mb-20">
         <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
-            <h2 class="font-serif text-xl sm:text-2xl font-bold mb-4">Wpisz tytuł i podtytuł lub wybraną frazę</h2>
+            <h2 class="font-serif text-xl sm:text-2xl font-bold mb-4">Wpisz tytuł i podtytuł, wybierz język.</h2>
             
-            <!-- Flagi -->
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-navy-800/70 mb-2">Wybierz język docelowy:</label>
-                <div class="flex gap-4 text-2xl" id="flag-container">
-                    <div class="flag-btn active" data-lang="en-US" title="USA">🇺🇸</div>
-                    <div class="flag-btn" data-lang="en-GB" title="UK">🇬🇧</div>
-                    <div class="flag-btn" data-lang="de" title="Niemcy">🇩🇪</div>
-                    <div class="flag-btn" data-lang="fr" title="Francja">🇫🇷</div>
-                    <div class="flag-btn" data-lang="it" title="Włochy">🇮🇹</div>
-                    <div class="flag-btn" data-lang="es" title="Hiszpania">🇪🇸</div>
-                    <div class="flag-btn" data-lang="pl" title="Polska">🇵🇱</div>
+            <!-- Flagi Językowe z obrazków (SVG) -->
+            <div class="mb-6 bg-cream-50 p-4 rounded-lg border border-cream-200">
+                <label class="block text-sm font-medium text-navy-800/70 mb-3 uppercase tracking-wider">Wybierz język docelowy:</label>
+                <div class="flex flex-wrap gap-5" id="flag-container">
+                    <div class="flag-btn active" data-lang="en-US" title="Angielski (USA)"><img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                    <div class="flag-btn" data-lang="en-GB" title="Angielski (UK)"><img src="https://flagcdn.com/w40/gb.png" alt="UK" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                    <div class="flag-btn" data-lang="de" title="Niemiecki"><img src="https://flagcdn.com/w40/de.png" alt="DE" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                    <div class="flag-btn" data-lang="fr" title="Francuski"><img src="https://flagcdn.com/w40/fr.png" alt="FR" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                    <div class="flag-btn" data-lang="it" title="Włoski"><img src="https://flagcdn.com/w40/it.png" alt="IT" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                    <div class="flag-btn" data-lang="es" title="Hiszpański"><img src="https://flagcdn.com/w40/es.png" alt="ES" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                    <div class="flag-btn" data-lang="pl" title="Polski"><img src="https://flagcdn.com/w40/pl.png" alt="PL" class="w-8 h-auto shadow-sm rounded-sm"></div>
                 </div>
             </div>
 
-            <!-- Tytuł -->
-            <div class="mb-4">
-                <input type="text" id="title-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm" placeholder="Tytuł książki (np. Coloring Book for Adults)">
+            <!-- Pola -->
+            <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label class="block text-xs font-bold text-navy-800/70 mb-2 uppercase tracking-wider">Tytuł Książki</label>
+                    <input type="text" id="title-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm shadow-inner" placeholder="np. Coloring Book for Adults">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-navy-800/70 mb-2 uppercase tracking-wider">Podtytuł (Opcjonalnie)</label>
+                    <input type="text" id="subtitle-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm shadow-inner" placeholder="np. 50 Stress Relieving Mandalas">
+                </div>
             </div>
             
-            <!-- Podtytuł -->
-            <div class="mb-6">
-                <input type="text" id="subtitle-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm" placeholder="Podtytuł (Opcjonalnie, np. 50 Beautiful Mandalas)">
-            </div>
-            
-            <button onclick="processKeywords()" id="process-btn" class="w-full sm:w-auto bg-kdp_red-600 text-white px-8 py-3 rounded-md font-semibold hover:bg-kdp_red-700 transition-colors shadow-md disabled:opacity-50">
-                WYGENERUJ (-1 Token)
+            <button onclick="processKeywords()" id="process-btn" class="w-full sm:w-auto bg-kdp_red-600 text-white px-8 py-3 rounded-md font-semibold hover:bg-kdp_red-700 transition-colors shadow-md disabled:opacity-50 tracking-wide">
+                WYGENERUJ
             </button>
             
             <div id="error-msg" class="hidden mt-4 text-red-600 text-sm font-medium"></div>
         </div>
 
+        <!-- Kontener z wynikami -->
         <div id="results-container" class="hidden mt-8 space-y-6">
             
-            <!-- 7 okienek -->
+            <!-- Wyniki - 7 Boxów -->
             <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
                 <h3 class="font-serif text-xl font-bold mb-4">Twoje 7 okienek KDP:</h3>
                 <div id="boxes-list" class="space-y-3 font-mono text-sm bg-cream-50 p-6 rounded border border-cream-200">
-                    <!-- Wyniki wpadną tutaj -->
+                    <!-- Wyniki z AI wpadną tutaj -->
+                </div>
+                
+                <div class="mt-6 text-left">
+                    <button onclick="downloadTxt()" class="bg-navy-900 text-white px-6 py-2.5 rounded-md font-medium hover:bg-navy-800 transition-colors shadow-sm text-sm">
+                        Pobierz plik .txt
+                    </button>
                 </div>
             </div>
 
-            <!-- Przycisk pobierz -->
-            <div class="text-center">
-                <button onclick="downloadTxt()" class="bg-navy-900 text-white px-8 py-3 rounded-md font-semibold hover:bg-navy-800 transition-colors shadow-md">
-                    Pobierz plik .txt
-                </button>
-            </div>
-
-            <!-- Surówka -->
-            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200 opacity-75 hover:opacity-100 transition-opacity">
-                <h3 class="font-serif text-lg font-bold mb-2 text-navy-800/80">Wygenerowane Słowa (Surówka z AI):</h3>
-                <textarea id="raw-text" rows="4" readonly class="w-full p-4 border border-cream-200 rounded-md bg-cream-50 text-xs font-mono text-navy-800/70"></textarea>
+            <!-- Ukryta, wyszarzona surówka wygenerowana z AI -->
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200 opacity-60 hover:opacity-100 transition-opacity">
+                <h3 class="font-serif text-base font-bold mb-2 text-navy-800/80">Oryginalna baza słów (Raw AI Output):</h3>
+                <textarea id="raw-text" rows="3" readonly class="w-full p-3 border border-cream-200 rounded-md bg-cream-50 text-xs font-mono text-navy-800/70"></textarea>
             </div>
             
         </div>
@@ -118,12 +123,30 @@
         let currentLanguage = 'en-US';
         let currentBoxes = [];
         
+        // Resetowanie błędu i odblokowywanie przycisku przy jakimkolwiek nowym ruchu usera
+        function resetUI() {
+            const btn = document.getElementById('process-btn');
+            btn.disabled = false;
+            btn.innerText = "WYGENERUJ";
+            document.getElementById('error-msg').classList.add('hidden');
+        }
+
+        // Podpinamy reset pod inputy
+        document.getElementById('title-input').addEventListener('input', resetUI);
+        document.getElementById('subtitle-input').addEventListener('input', resetUI);
+        
         // Obsługa kliknięcia we flagi
         document.querySelectorAll('.flag-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                resetUI(); // Użytkownik zmienia język, upewnijmy się, że może wygenerować znowu
                 document.querySelectorAll('.flag-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentLanguage = e.target.getAttribute('data-lang');
+                
+                // Znajdujemy kliknięty kontener z klasą flag-btn (nawet jak user kliknie w sam obrazek)
+                const targetBtn = e.target.closest('.flag-btn');
+                if (targetBtn) {
+                    targetBtn.classList.add('active');
+                    currentLanguage = targetBtn.getAttribute('data-lang');
+                }
             });
         });
         
@@ -133,8 +156,8 @@
             const title = document.getElementById('title-input').value;
             const subtitle = document.getElementById('subtitle-input').value;
             
-            if(!title) {
-                errorMsg.innerText = "Podaj przynajmniej tytuł lub główną frazę!";
+            if(!title.trim()) {
+                errorMsg.innerText = "Pole Tytuł nie może być puste!";
                 errorMsg.classList.remove('hidden');
                 return;
             }
@@ -153,36 +176,45 @@
                 const data = await response.json();
                 
                 if (!response.ok) {
-                    errorMsg.innerText = data.error;
+                    errorMsg.innerText = data.error || "Wystąpił nieznany błąd";
                     errorMsg.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerText = "WYGENERUJ (-1 Token)";
                     return;
                 }
                 
-                // Update credits
-                document.getElementById('credit-count').innerText = data.remaining_credits;
+                if(document.getElementById('credit-count')) {
+                    document.getElementById('credit-count').innerText = data.remaining_credits;
+                }
                 
-                // Show raw
-                document.getElementById('raw-text').value = data.raw_text;
+                if(document.getElementById('raw-text') && data.raw_text) {
+                    document.getElementById('raw-text').value = data.raw_text;
+                }
                 
-                // Show results
-                currentBoxes = data.boxes;
+                currentBoxes = data.boxes || [];
                 const list = document.getElementById('boxes-list');
-                list.innerHTML = '';
+                if(list) {
+                    list.innerHTML = '';
+                    currentBoxes.forEach((box, index) => {
+                        const div = document.createElement('div');
+                        div.innerHTML = `<span class="text-kdp_red-600 font-bold mr-2">Box ${index + 1}:</span> ${box} <span class="text-gray-400 text-xs ml-2 font-bold tracking-wider">${box.length}/50</span>`;
+                        list.appendChild(div);
+                    });
+                }
                 
-                data.boxes.forEach((box, index) => {
-                    const div = document.createElement('div');
-                    div.innerHTML = `<span class="text-kdp_red-600 font-bold mr-2">Box ${index + 1}:</span> ${box} <span class="text-gray-400 text-xs ml-2 font-bold tracking-wider">${box.length}/50</span>`;
-                    list.appendChild(div);
-                });
-                
-                document.getElementById('results-container').classList.remove('hidden');
+                const resultsContainer = document.getElementById('results-container');
+                if(resultsContainer) {
+                    resultsContainer.classList.remove('hidden');
+                }
                 
             } catch (err) {
-                errorMsg.innerText = "Wystąpił błąd podczas łączenia z serwerem.";
+                console.error(err);
+                errorMsg.innerText = "Wystąpił krytyczny błąd połączenia z serwerem.";
                 errorMsg.classList.remove('hidden');
             } finally {
+                // To wywoła się ZAWSZE na koniec (po sukcesie albo błędzie API)
                 btn.disabled = false;
-                btn.innerText = "WYGENERUJ (-1 Token)";
+                btn.innerText = "WYGENERUJ";
             }
         }
         
