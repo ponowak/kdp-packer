@@ -19,10 +19,13 @@
     <style>
         .flag-btn {
             filter: grayscale(100%);
-            opacity: 0.6;
+            opacity: 0.4;
             transition: all 0.2s;
             cursor: pointer;
             user-select: none;
+            padding: 2px;
+            border: 2px solid transparent;
+            border-radius: 6px;
         }
         .flag-btn:hover {
             filter: grayscale(0%);
@@ -33,25 +36,33 @@
             filter: grayscale(0%);
             opacity: 1;
             transform: scale(1.1);
-            border-bottom: 3px solid theme('colors.kdp_red.600');
-            padding-bottom: 2px;
+            border: 2px solid theme('colors.kdp_red.600');
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .flag-btn img {
+            display: block;
         }
     </style>
 </head>
 <body class="bg-cream-100 font-sans text-navy-900 min-h-screen">
     <!-- Pasek Nawigacji -->
-    <nav class="bg-white border-b border-cream-200 px-6 py-4 flex justify-between items-center flex-wrap gap-4">
-        <div class="font-serif font-bold text-xl tracking-tight">
+    <nav class="bg-white border-b border-cream-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="font-serif font-bold text-xl tracking-tight text-center sm:text-left w-full sm:w-auto">
             7-Backend<span class="text-kdp_red-600">.</span>Keywords
         </div>
-        <div class="flex items-center gap-4 sm:gap-6 flex-wrap">
+        <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-end w-full sm:w-auto">
             <div class="bg-cream-100 px-4 py-1.5 rounded-full text-sm font-medium border border-cream-200">
                 Tokeny: <span id="credit-count" class="font-bold text-kdp_red-600">{{ credits }}</span>
             </div>
             <a href="https://7backend.lemonsqueezy.com/checkout/buy/c849be9a-661b-4b1c-844f-10e88367d7d3" target="_blank" class="text-xs sm:text-sm font-bold text-kdp_red-600 border border-kdp_red-600 px-3 py-1.5 rounded hover:bg-kdp_red-600 hover:text-white transition-colors">
                 Kup Tokeny
             </a>
-            <a href="/logout" class="text-sm text-navy-800/60 hover:text-navy-900 font-medium hidden sm:block">Wyloguj ({{ email }})</a>
+            <!-- Na tel ikonka drzwi, na PC email -->
+            <a href="/logout" class="text-sm text-navy-800/60 hover:text-navy-900 font-medium">
+                <span class="hidden sm:inline">Wyloguj ({{ email }})</span>
+                <span class="sm:hidden font-bold underline">Wyloguj</span>
+            </a>
         </div>
     </nav>
 
@@ -60,25 +71,25 @@
         <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
             <h2 class="font-serif text-xl sm:text-2xl font-bold mb-4">Wpisz tytuł i podtytuł, wybierz język.</h2>
             
-            <!-- Flagi Językowe z obrazków (SVG) -->
+            <!-- Flagi Językowe z obrazków (SVG) i wyraźnym podświetleniem -->
             <div class="mb-6 bg-cream-50 p-4 rounded-lg border border-cream-200">
                 <label class="block text-sm font-medium text-navy-800/70 mb-3 uppercase tracking-wider">Wybierz język docelowy:</label>
-                <div class="flex flex-wrap gap-5" id="flag-container">
-                    <div class="flag-btn active" data-lang="en-US" title="Angielski (USA)"><img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-8 h-auto shadow-sm rounded-sm"></div>
-                    <div class="flag-btn" data-lang="en-GB" title="Angielski (UK)"><img src="https://flagcdn.com/w40/gb.png" alt="UK" class="w-8 h-auto shadow-sm rounded-sm"></div>
-                    <div class="flag-btn" data-lang="de" title="Niemiecki"><img src="https://flagcdn.com/w40/de.png" alt="DE" class="w-8 h-auto shadow-sm rounded-sm"></div>
-                    <div class="flag-btn" data-lang="fr" title="Francuski"><img src="https://flagcdn.com/w40/fr.png" alt="FR" class="w-8 h-auto shadow-sm rounded-sm"></div>
-                    <div class="flag-btn" data-lang="it" title="Włoski"><img src="https://flagcdn.com/w40/it.png" alt="IT" class="w-8 h-auto shadow-sm rounded-sm"></div>
-                    <div class="flag-btn" data-lang="es" title="Hiszpański"><img src="https://flagcdn.com/w40/es.png" alt="ES" class="w-8 h-auto shadow-sm rounded-sm"></div>
-                    <div class="flag-btn" data-lang="pl" title="Polski"><img src="https://flagcdn.com/w40/pl.png" alt="PL" class="w-8 h-auto shadow-sm rounded-sm"></div>
+                <div class="flex flex-wrap gap-4" id="flag-container">
+                    <div class="flag-btn active" data-lang="en-US" title="Angielski (USA)"><img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-8 h-auto rounded-sm"></div>
+                    <div class="flag-btn" data-lang="en-GB" title="Angielski (UK)"><img src="https://flagcdn.com/w40/gb.png" alt="UK" class="w-8 h-auto rounded-sm"></div>
+                    <div class="flag-btn" data-lang="de" title="Niemiecki"><img src="https://flagcdn.com/w40/de.png" alt="DE" class="w-8 h-auto rounded-sm"></div>
+                    <div class="flag-btn" data-lang="fr" title="Francuski"><img src="https://flagcdn.com/w40/fr.png" alt="FR" class="w-8 h-auto rounded-sm"></div>
+                    <div class="flag-btn" data-lang="it" title="Włoski"><img src="https://flagcdn.com/w40/it.png" alt="IT" class="w-8 h-auto rounded-sm"></div>
+                    <div class="flag-btn" data-lang="es" title="Hiszpański"><img src="https://flagcdn.com/w40/es.png" alt="ES" class="w-8 h-auto rounded-sm"></div>
+                    <div class="flag-btn" data-lang="pl" title="Polski"><img src="https://flagcdn.com/w40/pl.png" alt="PL" class="w-8 h-auto rounded-sm"></div>
                 </div>
             </div>
 
             <!-- Pola -->
             <div class="grid sm:grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label class="block text-xs font-bold text-navy-800/70 mb-2 uppercase tracking-wider">Tytuł Książki</label>
-                    <input type="text" id="title-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm shadow-inner" placeholder="np. Coloring Book for Adults">
+                    <label class="block text-xs font-bold text-navy-800/70 mb-2 uppercase tracking-wider" id="title-label">Tytuł Książki</label>
+                    <input type="text" id="title-input" class="w-full p-4 border border-cream-200 rounded-md focus:ring-2 focus:ring-kdp_red-600 focus:outline-none text-sm shadow-inner transition-colors" placeholder="np. Coloring Book for Adults">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-navy-800/70 mb-2 uppercase tracking-wider">Podtytuł (Opcjonalnie)</label>
@@ -96,17 +107,16 @@
         <!-- Kontener z wynikami -->
         <div id="results-container" class="hidden mt-8 space-y-6">
             
-            <!-- Wyniki - 7 Boxów -->
+            <!-- Wyniki - 7 Boxów z przyciskami KOPIUJ -->
             <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
-                <h3 class="font-serif text-xl font-bold mb-4">Twoje 7 okienek KDP:</h3>
-                <div id="boxes-list" class="space-y-3 font-mono text-sm bg-cream-50 p-6 rounded border border-cream-200">
-                    <!-- Wyniki z AI wpadną tutaj -->
-                </div>
-                
-                <div class="mt-6 text-left">
-                    <button onclick="downloadTxt()" class="bg-navy-900 text-white px-6 py-2.5 rounded-md font-medium hover:bg-navy-800 transition-colors shadow-sm text-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-serif text-xl font-bold">Twoje 7 okienek KDP:</h3>
+                    <button onclick="downloadTxt()" class="bg-navy-900 text-white px-4 py-2 rounded-md font-medium hover:bg-navy-800 transition-colors shadow-sm text-xs sm:text-sm">
                         Pobierz plik .txt
                     </button>
+                </div>
+                <div id="boxes-list" class="space-y-3 font-mono text-sm bg-cream-50 p-4 sm:p-6 rounded border border-cream-200">
+                    <!-- Wyniki z AI wpadną tutaj -->
                 </div>
             </div>
 
@@ -123,25 +133,22 @@
         let currentLanguage = 'en-US';
         let currentBoxes = [];
         
-        // Resetowanie błędu i odblokowywanie przycisku przy jakimkolwiek nowym ruchu usera
         function resetUI() {
             const btn = document.getElementById('process-btn');
             btn.disabled = false;
             btn.innerText = "WYGENERUJ";
             document.getElementById('error-msg').classList.add('hidden');
+            document.getElementById('title-input').classList.remove('border-red-500', 'ring-red-500');
+            document.getElementById('title-label').classList.remove('text-red-500');
         }
 
-        // Podpinamy reset pod inputy
         document.getElementById('title-input').addEventListener('input', resetUI);
         document.getElementById('subtitle-input').addEventListener('input', resetUI);
         
-        // Obsługa kliknięcia we flagi
         document.querySelectorAll('.flag-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                resetUI(); // Użytkownik zmienia język, upewnijmy się, że może wygenerować znowu
+                resetUI();
                 document.querySelectorAll('.flag-btn').forEach(b => b.classList.remove('active'));
-                
-                // Znajdujemy kliknięty kontener z klasą flag-btn (nawet jak user kliknie w sam obrazek)
                 const targetBtn = e.target.closest('.flag-btn');
                 if (targetBtn) {
                     targetBtn.classList.add('active');
@@ -150,14 +157,36 @@
             });
         });
         
+        // Funkcja kopiowania pojedynczego boxu
+        function copyBox(index) {
+            const textToCopy = currentBoxes[index];
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const copyBtn = document.getElementById(`copy-btn-${index}`);
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = "Skopiowano!";
+                copyBtn.classList.add('bg-green-600', 'text-white', 'border-green-600');
+                copyBtn.classList.remove('text-navy-900', 'border-cream-200');
+                
+                setTimeout(() => {
+                    copyBtn.innerText = originalText;
+                    copyBtn.classList.remove('bg-green-600', 'text-white', 'border-green-600');
+                    copyBtn.classList.add('text-navy-900', 'border-cream-200');
+                }, 2000);
+            });
+        }
+        
         async function processKeywords() {
             const btn = document.getElementById('process-btn');
             const errorMsg = document.getElementById('error-msg');
-            const title = document.getElementById('title-input').value;
+            const titleInput = document.getElementById('title-input');
+            const titleLabel = document.getElementById('title-label');
+            const title = titleInput.value;
             const subtitle = document.getElementById('subtitle-input').value;
             
             if(!title.trim()) {
-                errorMsg.innerText = "Pole Tytuł nie może być puste!";
+                titleInput.classList.add('border-red-500', 'ring-red-500');
+                titleLabel.classList.add('text-red-500');
+                errorMsg.innerText = "Podaj przynajmniej tytuł książki!";
                 errorMsg.classList.remove('hidden');
                 return;
             }
@@ -179,7 +208,7 @@
                     errorMsg.innerText = data.error || "Wystąpił nieznany błąd";
                     errorMsg.classList.remove('hidden');
                     btn.disabled = false;
-                    btn.innerText = "WYGENERUJ (-1 Token)";
+                    btn.innerText = "WYGENERUJ";
                     return;
                 }
                 
@@ -197,7 +226,18 @@
                     list.innerHTML = '';
                     currentBoxes.forEach((box, index) => {
                         const div = document.createElement('div');
-                        div.innerHTML = `<span class="text-kdp_red-600 font-bold mr-2">Box ${index + 1}:</span> ${box} <span class="text-gray-400 text-xs ml-2 font-bold tracking-wider">${box.length}/50</span>`;
+                        div.className = "flex justify-between items-center border-b border-cream-200 pb-2 last:border-0 last:pb-0";
+                        
+                        div.innerHTML = `
+                            <div class="pr-4">
+                                <span class="text-kdp_red-600 font-bold mr-2">Box ${index + 1}:</span> 
+                                <span>${box}</span> 
+                                <span class="text-gray-400 text-xs ml-2 font-bold tracking-wider">${box.length}/50</span>
+                            </div>
+                            <button id="copy-btn-${index}" onclick="copyBox(${index})" class="text-xs font-bold uppercase tracking-wider text-navy-900 border border-cream-200 px-3 py-1.5 rounded hover:bg-cream-200 transition-colors whitespace-nowrap">
+                                Kopiuj
+                            </button>
+                        `;
                         list.appendChild(div);
                     });
                 }
@@ -212,7 +252,6 @@
                 errorMsg.innerText = "Wystąpił krytyczny błąd połączenia z serwerem.";
                 errorMsg.classList.remove('hidden');
             } finally {
-                // To wywoła się ZAWSZE na koniec (po sukcesie albo błędzie API)
                 btn.disabled = false;
                 btn.innerText = "WYGENERUJ";
             }
