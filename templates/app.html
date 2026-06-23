@@ -20,25 +20,15 @@
         .flag-btn {
             filter: grayscale(100%);
             opacity: 0.4;
-            transition: all 0.2s;
             cursor: pointer;
             user-select: none;
             padding: 2px;
-            border: 2px solid transparent;
-            border-radius: 6px;
-        }
-        .flag-btn:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.1);
+            transition: all 0.2s;
         }
         .flag-btn.active {
             filter: grayscale(0%);
             opacity: 1;
             transform: scale(1.1);
-            border: 2px solid theme('colors.kdp_red.600');
-            background-color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .flag-btn img {
             display: block;
@@ -71,7 +61,7 @@
         <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-cream-200">
             <h2 class="font-serif text-xl sm:text-2xl font-bold mb-4">Wpisz tytuł i podtytuł, wybierz język.</h2>
             
-            <!-- Flagi Językowe z obrazków (SVG) i wyraźnym podświetleniem -->
+            <!-- Flagi Językowe -->
             <div class="mb-6 bg-cream-50 p-4 rounded-lg border border-cream-200">
                 <label class="block text-sm font-medium text-navy-800/70 mb-3 uppercase tracking-wider">Wybierz język docelowy:</label>
                 <div class="flex flex-wrap gap-4" id="flag-container">
